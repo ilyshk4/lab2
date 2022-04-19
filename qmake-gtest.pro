@@ -5,6 +5,6 @@ CONFIG -= qt
 
 QMAKE_CXXFLAGS += -fprofile-arcs -ftest-coverage -O0
 
-SUBDIRS = lab2 tests
+SUBDIRS = app tests
 
 CONFIG += ordered
