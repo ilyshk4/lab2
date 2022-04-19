@@ -3,11 +3,28 @@ CONFIG += console
 CONFIG -= app_bundle
 CONFIG -= qt
 
-SOURCES += main.c \
-    myfunc.c
+SOURCES += \
+	load.c \
+	m.c \
+	save.c \
+	show.c \
+	showreveven.c \
+    editor.c \
+    mnlb.c \
+    p.c \
+	text/append_line.c \
+	text/insert_line.c \
+	text/create_text.c \
+	text/process_forward.c \
+	text/process_backward.c \
+	text/remove_all.c \
+	text/set_cursor.c \
+	text/get_cursor.c 
 
 HEADERS += \
-    myfunc.h
+    common.h \
+    text/_text.h \
+    text/text.h 
 
 QMAKE_CFLAGS += -Wall -Wextra -Werror
 
