@@ -19,7 +19,7 @@ DEFINES += INPUTDIR=\\\"$$PWD/input/\\\"
 HEADERS +=     \
     ../app/text.h \
     ../app/common.h \
-    showreveven_tests.h
+    tests.h
 
 SOURCES +=     main.cpp \
     ../app/set_cursor.c \

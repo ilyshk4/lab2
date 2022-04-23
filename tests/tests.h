@@ -1,5 +1,5 @@
-#ifndef SHOWREVEVEN_TESTS_H
-#define SHOWREVEVEN_TESTS_H
+#ifndef TESTS_H
+#define TESTS_H
 
 #include <gtest/gtest.h>
 
@@ -85,6 +85,19 @@ TEST(mnlb, OneLine) {
 	text txt = create_text();
 	load(txt, "tests/input/input3.txt");
 	set_cursor(txt, 0, 0);
+	mnlb(txt);
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	
+	ASSERT_NE(output, "");
+}
+
+TEST(mnlb, LastLine) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
+	set_cursor(txt, 4, 0);
 	mnlb(txt);
 	
 	std::string output = testing::internal::GetCapturedStderr();
