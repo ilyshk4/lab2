@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "common.h"
-#include "text/text.h"
+#include "text.h"
 
 /**
  * Загружает содержимое указанного файла

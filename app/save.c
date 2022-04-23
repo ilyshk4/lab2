@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include "common.h"
-#include "text/text.h"
+#include "text.h"
 
 static void save_line(int index, char *contents, int cursor, void *data);
 

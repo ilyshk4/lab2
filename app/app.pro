@@ -12,19 +12,19 @@ SOURCES += \
     editor.c \
     mnlb.c \
     p.c \
-	text/append_line.c \
-	text/insert_line.c \
-	text/create_text.c \
-	text/process_forward.c \
-	text/process_backward.c \
-	text/remove_all.c \
-	text/set_cursor.c \
-	text/get_cursor.c 
+	append_line.c \
+	insert_line.c \
+	create_text.c \
+	process_forward.c \
+	process_backward.c \
+	remove_all.c \
+	set_cursor.c \
+	get_cursor.c 
 
 HEADERS += \
     common.h \
-    text/_text.h \
-    text/text.h 
+    _text.h \
+    text.h 
 
 QMAKE_CFLAGS += -Wall -Wextra -Werror
 
