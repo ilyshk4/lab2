@@ -131,4 +131,44 @@ TEST(p, Default) {
 	ASSERT_EQ(output, target);
 }
 
+TEST(p, NullFile) {
+	testing::internal::CaptureStderr();
+
+	p(NULL, 0, "Huh");
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	ASSERT_NE(output, "");
+}
+
+TEST(p, EmptyFile) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	p(txt, 0, "Huh");
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	ASSERT_NE(output, "");
+}
+
+TEST(p, InvalidLineNumber) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	p(txt, 9999, "Huh");
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	ASSERT_NE(output, "");
+}
+
+TEST(p, NullContentsPointer) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
+	p(txt, 0, NULL);
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	ASSERT_NE(output, "");
+}
+
 #endif
