@@ -154,6 +154,7 @@ TEST(p, InvalidLineNumber) {
 	testing::internal::CaptureStderr();
 	
 	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
 	p(txt, 9999, "Huh");
 	
 	std::string output = testing::internal::GetCapturedStderr();
