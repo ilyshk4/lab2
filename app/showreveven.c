@@ -12,7 +12,7 @@ void show_rev_even(text txt)
 
 static void show_line(int index, char *contents, int cursor, void *data)
 {
-	if (index % 2 != 0)
+	if ((index + 1) % 2 != 0)
 		return;
 	
     /* Функция обработчик всегда получает существующую строку */
