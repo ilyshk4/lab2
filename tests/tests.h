@@ -105,6 +105,18 @@ TEST(mnlb, LastLine) {
 	ASSERT_NE(output, "");
 }
 
+TEST(set_cursor, LastPosition) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
+	set_cursor(txt, 0, 999);
+	
+	std::string output = testing::internal::GetCapturedStderr();
+	
+	ASSERT_NE(output, "");
+}
+
 TEST(p, Default) {
 	testing::internal::CaptureStdout();
 	
