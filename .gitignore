@@ -6,3 +6,4 @@ app/app
 *.gcda
 *.gcno
 tests/tests
+.qmake.stash
