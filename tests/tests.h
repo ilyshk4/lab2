@@ -22,7 +22,7 @@ std::string GetText(std::string filename) {
 	return target;
 }
 
-TEST(showreveven, Default) {	
+TEST(showreveven, DefaultEven) {	
 	testing::internal::CaptureStdout();
 	
 	text txt = create_text();
@@ -35,6 +35,19 @@ TEST(showreveven, Default) {
 	ASSERT_EQ(output, target);
 }
 
+TEST(showreveven, DefaultOdd) {	
+	testing::internal::CaptureStdout();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input5.txt");
+	show_rev_even(txt);
+	
+	std::string output = testing::internal::GetCapturedStdout();
+	std::string target = GetText("tests/input/output5.txt");
+	
+	ASSERT_EQ(output, target);
+}
+
 TEST(showreveven, NullFile) {
 	testing::internal::CaptureStderr();
 	
@@ -42,6 +55,18 @@ TEST(showreveven, NullFile) {
 	
 	std::string output = testing::internal::GetCapturedStderr();
 	
+	ASSERT_NE(output, "");
+}
+
+TEST(showreveven, EmptyFile) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/empty.txt");
+	show_rev_even(txt);
+	
+	std::string output = testing::internal::GetCapturedStderr();
+
 	ASSERT_NE(output, "");
 }
 
@@ -105,15 +130,39 @@ TEST(mnlb, LastLine) {
 	ASSERT_NE(output, "");
 }
 
-TEST(set_cursor, LastPosition) {
-	testing::internal::CaptureStderr();
+TEST(set_cursor, Default) {
+	testing::internal::CaptureStdout();
 	
 	text txt = create_text();
-	load(txt, "tests/input/input4.txt");
-	set_cursor(txt, 0, 999);
+	load(txt, "tests/input/input6.txt");
+	set_cursor(txt, 1, 3);
+	show(txt);
+	
+	std::string output = testing::internal::GetCapturedStdout();
+	std::string target = GetText("tests/input/output6.txt");
+	
+	ASSERT_EQ(output, target);
+}
+
+TEST(set_cursor, LineOutOfRange) {
+	testing::internal::CaptureStderr();
+
+	text txt = create_text();
+	load(txt, "tests/input/input6.txt");
+	set_cursor(txt, 9999, 0);
 	
 	std::string output = testing::internal::GetCapturedStderr();
+	ASSERT_NE(output, "");
+}
+
+TEST(set_cursor, PositionOutOfRange) {
+	testing::internal::CaptureStderr();
+
+	text txt = create_text();
+	load(txt, "tests/input/input6.txt");
+	set_cursor(txt, 0, 9999);
 	
+	std::string output = testing::internal::GetCapturedStderr();
 	ASSERT_NE(output, "");
 }
 
@@ -131,6 +180,34 @@ TEST(p, Default) {
 	ASSERT_EQ(output, target);
 }
 
+TEST(p, DefaultFirstLine) {
+	testing::internal::CaptureStdout();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
+	p(txt, 0, "Huh");
+	show(txt);
+	
+	std::string output = testing::internal::GetCapturedStdout();
+	std::string target = GetText("tests/input/output7.txt");
+	
+	ASSERT_EQ(output, target);
+}
+
+TEST(p, DefaultLastLine) {
+	testing::internal::CaptureStdout();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input4.txt");
+	p(txt, 4, "Huh");
+	show(txt);
+	
+	std::string output = testing::internal::GetCapturedStdout();
+	std::string target = GetText("tests/input/output8.txt");
+	
+	ASSERT_EQ(output, target);
+}
+
 TEST(p, NullFile) {
 	testing::internal::CaptureStderr();
 
@@ -144,6 +221,7 @@ TEST(p, EmptyFile) {
 	testing::internal::CaptureStderr();
 	
 	text txt = create_text();
+	load(txt, "tests/input/empty.txt");
 	p(txt, 0, "Huh");
 	
 	std::string output = testing::internal::GetCapturedStderr();
