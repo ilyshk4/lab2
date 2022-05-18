@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <math.h>
 #include <fstream>
+#include <cstdio>
 
 extern "C" {
 #include "text.h"
@@ -53,9 +54,8 @@ TEST(showreveven, NullFile) {
 	
 	show_rev_even(NULL);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(showreveven, EmptyFile) {
@@ -65,9 +65,8 @@ TEST(showreveven, EmptyFile) {
 	load(txt, "tests/input/empty.txt");
 	show_rev_even(txt);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(mnlb, Default) {
@@ -90,8 +89,8 @@ TEST(mnlb, NullFile) {
 
 	mnlb(NULL);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(mnlb, EmptyFile) {
@@ -100,8 +99,8 @@ TEST(mnlb, EmptyFile) {
 	text txt = create_text();
 	mnlb(txt);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(mnlb, OneLine) {
@@ -112,9 +111,8 @@ TEST(mnlb, OneLine) {
 	set_cursor(txt, 0, 0);
 	mnlb(txt);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(mnlb, LastLine) {
@@ -125,9 +123,8 @@ TEST(mnlb, LastLine) {
 	set_cursor(txt, 4, 0);
 	mnlb(txt);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(set_cursor, Default) {
@@ -151,8 +148,8 @@ TEST(set_cursor, LineOutOfRange) {
 	load(txt, "tests/input/input6.txt");
 	set_cursor(txt, 9999, 0);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(set_cursor, PositionOutOfRange) {
@@ -162,8 +159,8 @@ TEST(set_cursor, PositionOutOfRange) {
 	load(txt, "tests/input/input6.txt");
 	set_cursor(txt, 0, 9999);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(p, Default) {
@@ -213,8 +210,8 @@ TEST(p, NullFile) {
 
 	p(NULL, 0, "Huh");
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(p, EmptyFile) {
@@ -224,8 +221,8 @@ TEST(p, EmptyFile) {
 	load(txt, "tests/input/empty.txt");
 	p(txt, 0, "Huh");
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(p, InvalidLineNumber) {
@@ -235,8 +232,8 @@ TEST(p, InvalidLineNumber) {
 	load(txt, "tests/input/input4.txt");
 	p(txt, 9999, "Huh");
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 TEST(p, NullContentsPointer) {
@@ -246,8 +243,54 @@ TEST(p, NullContentsPointer) {
 	load(txt, "tests/input/input4.txt");
 	p(txt, 0, NULL);
 	
-	std::string output = testing::internal::GetCapturedStderr();
-	ASSERT_NE(output, "");
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
+}
+
+TEST(save, Default) {
+	text txt = create_text();
+	load(txt, "tests/input/input6.txt");
+	save(txt, "test.txt");
+	
+	std::string origin = GetText("tests/input/input6.txt");
+	std::string target = GetText("test.txt");
+	std::remove("test.txt");
+	
+	ASSERT_EQ(origin, target);
+}
+
+TEST(save, EmptyFile) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/empty.txt");
+	save(txt, "test.txt");
+
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	std::remove("test.txt");
+	ASSERT_NE(capturedStderr, "");
+}
+
+TEST(save, NullFile) {
+	testing::internal::CaptureStderr();
+	
+	save(NULL, "test.txt");
+	
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	std::remove("test.txt");
+	ASSERT_NE(capturedStderr, "");
+}
+
+
+TEST(save, FileOpenError) {
+	testing::internal::CaptureStderr();
+	
+	text txt = create_text();
+	load(txt, "tests/input/input6.txt");
+	save(txt, "/");
+	
+	std::string capturedStderr = testing::internal::GetCapturedStderr();
+	ASSERT_NE(capturedStderr, "");
 }
 
 #endif

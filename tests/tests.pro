@@ -27,6 +27,7 @@ SOURCES +=     main.cpp \
     ../app/mnlb.c \
     ../app/p.c \
     ../app/show.c \
+    ../app/save.c \
     ../app/load.c \
     ../app/remove_all.c \
     ../app/append_line.c \

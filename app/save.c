@@ -11,7 +11,7 @@ void save(text txt, char *filename)
 
     /* Открываем файл для чтения, контролируя ошибки */
     if ((f = fopen(filename, "a")) == NULL) {
-        printf("The file %s cannot be opened\n", filename);
+        fprintf(stderr, "The file %s cannot be opened\n", filename);
         return;
     }
 
